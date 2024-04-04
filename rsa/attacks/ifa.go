@@ -71,5 +71,5 @@ func (ctx *Attacks) IfaAttack(n *big.Int, e *big.Int, c *big.Int) {
 	ctx.logger.Debug("", "d", d)
 	ctx.logger.Info("", "decimal", decimal)
 	ctx.logger.Info("", "hex", decimalToHex(decimal))
-	ctx.logger.Info(string(decimal.Bytes()))
+	ctx.logger.Info("", "str", string(decimal.Bytes()))
 }

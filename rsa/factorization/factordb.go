@@ -2,13 +2,14 @@ package factorization
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/big"
 	"net/http"
+
+	"github.com/charmbracelet/log"
 )
 
 type response struct {
-	Id int `json:"id"`
+	Id interface{} `json:"id"`
 	Status string `json:"status"`
 	Factors [][]interface{} `json:"factors"`
 }
@@ -18,7 +19,7 @@ func FactorDBFactorize(n *big.Int) (*big.Int, *big.Int) {
 
 	r, err := http.Get(url)
 	if err != nil {
-		fmt.Printf("Failed to fetch data from factordb.com, error: %v\n", err)
+		log.Error("Failed to fetch data from factordb.com", "error", err)
 		return &big.Int{}, &big.Int{}
 	}
 
@@ -28,7 +29,7 @@ func FactorDBFactorize(n *big.Int) (*big.Int, *big.Int) {
 	err = json.NewDecoder(r.Body).Decode(&response)
 
 	if err != nil {
-		fmt.Printf("Failed to decode response from factordb.com, error: %v\n", err)
+		log.Error("Failed to decode response from factordb.com", "error", err)
 		return &big.Int{}, &big.Int{}
 	}
 
@@ -40,7 +41,7 @@ func FactorDBFactorize(n *big.Int) (*big.Int, *big.Int) {
 	for _, fwn := range response.Factors {
 		factor, sucs := big.NewInt(0).SetString(fwn[0].(string), 10)
 		if !sucs {
-			fmt.Printf("Failed to parse factor %d", factor)
+			log.Error("Failed to parse factor", "factor", factor)
 			return &big.Int{}, &big.Int{}
 		}
 
