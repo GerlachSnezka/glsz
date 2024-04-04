@@ -1,1 +1,1 @@
-**glsz** (**G**er**l**ach**S**ne**z**ka) is a powerful tool for CTFs - "mixed up from multiple tools" written in Go
+**glsz** (**G**er**l**ach**S**ne**z**ka) is a tool for CTF challenges. It is a mix of many tools, so we don't have to remember all of them and we can have everything in one place. Written in Go.
