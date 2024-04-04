@@ -5,7 +5,10 @@ import (
 	"math/big"
 
 	"github.com/GerlachSnezka/glsz/rsa/factorization"
+	"github.com/charmbracelet/log"
 )
+
+type Ifa struct {}
 
 func modInverse(a *big.Int, m *big.Int) *big.Int {
 	m0 := big.NewInt(0).Set(m)
@@ -56,7 +59,7 @@ func decimalToHex(decimal *big.Int) string {
 	return fmt.Sprintf("%x", decimal)
 }
 
-func (ctx *Attacks) IfaAttack(n *big.Int, e *big.Int, c *big.Int) {
+func (ifa *Ifa) Attack(n *big.Int, e *big.Int, c *big.Int) (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int) {
 	p, q := factorization.FactorDBFactorize(n)
 
 	phi := big.NewInt(0)
@@ -65,11 +68,15 @@ func (ctx *Attacks) IfaAttack(n *big.Int, e *big.Int, c *big.Int) {
 	d := modInverse(big.NewInt(0).Set(e), big.NewInt(0).Set(phi))
 	decimal := pow(big.NewInt(0).Set(c), big.NewInt(0).Set(d), big.NewInt(0).Set(n))
 
-	ctx.logger.Debug("", "p", p)
-	ctx.logger.Debug("", "q", q)
-	ctx.logger.Debug("", "phi", phi)
-	ctx.logger.Debug("", "d", d)
-	ctx.logger.Info("", "decimal", decimal)
-	ctx.logger.Info("", "hex", decimalToHex(decimal))
-	ctx.logger.Info("", "str", string(decimal.Bytes()))
+	return p, q, phi, d, decimal
+}
+
+func (ifa *Ifa) Print(p *big.Int, q *big.Int, phi *big.Int, d *big.Int, decimal *big.Int) {
+	log.Debug("", "p", p)
+	log.Debug("", "q", q)
+	log.Debug("", "phi", phi)
+	log.Debug("", "d", d)
+	log.Info("", "decimal", decimal)
+	log.Info("", "hex", decimalToHex(decimal))
+	log.Info("", "str", string(decimal.Bytes()))
 }

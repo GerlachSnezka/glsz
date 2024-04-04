@@ -1,20 +1,11 @@
 package attacks
 
-import (
-	"os"
+import "github.com/charmbracelet/log"
 
-	"github.com/charmbracelet/log"
-)
-
-type Attacks struct {
-	logger *log.Logger
-}
-
-func New(verbose bool) *Attacks {
-	logger := log.New(os.Stdout)
+func NewIfa(verbose bool) *Ifa {
 	if verbose {
-		logger.SetLevel(log.DebugLevel)
+		log.SetLevel(log.DebugLevel)
 	}
 
-	return &Attacks{logger: logger}
+	return &Ifa{}
 }
