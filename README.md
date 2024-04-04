@@ -1,0 +1,1 @@
+**glsz** (**G**er**l**ach**S**ne**z**ka) is a powerful tool for CTFs - "mixed up from multiple tools" written in Go
